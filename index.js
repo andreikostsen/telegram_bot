@@ -33,37 +33,6 @@ bot.start(  async (ctx) => {
           [Markup.button.callback('Получить подарок!', 'present')],
         ]
       ))
-
-
- // Set a timer for 5 seconds
-if (trigger) {
-
-    console.log(trigger)
-
- setTimeout(async () => {
-    await ctx.replyWithHTML(`<b>Как тебе практика?</b>\n\n` +
-        `Хочешь научиться большему и владеть волшебным инструментом Гуаша, делать самомассаж на уровне профессионала?\n\n` +
-        `Тогда нажимай кнопку ниже, познакомиться с курсом, который я для тебя подготовила`)
-        
-      await ctx.replyWithHTML('<b>Меню:</b>', Markup.inlineKeyboard(
-        [
-          [Markup.button.callback('Тарифы и стоимость', 'btn_1')],
-          [Markup.button.callback('Программа курса и отзывы', 'btn_2')],
-          [Markup.button.callback('Записаться на курс', 'btn_3')],
-        ]
-      ))
-
-}, 5000);
-
-
-}
-
-
-    
-       
-    
-
-
 })
 
 
@@ -79,7 +48,28 @@ function addActionBot(id_btn, src_img, text, preview) {
     bot.action(id_btn, async (ctx) => {
     
       try {  
-          trigger = true;
+
+
+          if (id_btn == 'present') {
+
+              // Set a timer for 5 seconds
+              setTimeout(async () => {
+                  await ctx.replyWithHTML(`<b>Как тебе практика?</b>\n\n` +
+                      `Хочешь научиться большему и владеть волшебным инструментом Гуаша, делать самомассаж на уровне профессионала?\n\n` +
+                      `Тогда нажимай кнопку ниже, познакомиться с курсом, который я для тебя подготовила`)
+
+                  await ctx.replyWithHTML('<b>Меню:</b>', Markup.inlineKeyboard(
+                      [
+                          [Markup.button.callback('Тарифы и стоимость', 'btn_1')],
+                          [Markup.button.callback('Программа курса и отзывы', 'btn_2')],
+                          [Markup.button.callback('Записаться на курс', 'btn_3')],
+                      ]
+                  ))
+
+              }, 5000);
+
+
+          }
     
         await ctx.answerCbQuery()
         if (src_img !== false) {
