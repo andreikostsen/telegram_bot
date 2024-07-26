@@ -1,5 +1,4 @@
 const {Telegraf, Markup} = require('telegraf')
-const {message} = require('telegraf/filters')
 require('dotenv').config()
 const { CronJob } = require ('cron')
 
@@ -59,20 +58,6 @@ bot.action(['getMainMenu'], (ctx) => {
 
 bot.action(['feedback', 'access', 'prices', 'getCourse'], async ctx => {
 
-    const currentDate = new Date().toDateString();
-// Outputs "Mon Aug 31 2020"
-
-    console.log(currentDate)
-
-    const now = new Date();
-    const day = now.getDay(); // returns a number representing the day of the week, starting with 0 for Sunday
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    console.log(`Today is day ${day} and the time is ${hours}:${minutes}.`);
-
-    if (day == 1 && hours == 16 && minutes == 7) {
-        console.log(`Пора`)
-    }
 
 //ПРОГРАММА КУРСА И ОТЗЫВЫ
 
@@ -107,16 +92,13 @@ bot.action(['feedback', 'access', 'prices', 'getCourse'], async ctx => {
                 {disable_web_page_preview: true},
             )
         }, 5000)
-
-
-
     }
 
     //ФОРМАТ И ДОСТУП
 
     if (ctx.callbackQuery.data === 'access') {
 
-        await ctx.replyWithPhoto({source: './img/access.jpg'}),
+        await ctx.replyWithPhoto({source: './img/access.jpg'})
             await ctx.replyWithHTML(
                 `<u>Курс в записи</u>, будет доступен сразу после оплаты. Все материалы структурно размещены в <b>закрытом Telegram-канале.</b>\n\n` +
                 `Доступ к курсу - <u>6 месяцев</u>`
@@ -129,12 +111,9 @@ bot.action(['feedback', 'access', 'prices', 'getCourse'], async ctx => {
     if (ctx.callbackQuery.data === 'prices') {
 
         await ctx.replyWithHTML(
-            `❗️🎁<b><u>Специальные условия до конца марта в честь моего дня рождения</u></b>\n\n` +
-            `<b>◆ ТАРИФ СТАНДАРТНЫЙ</b>\n` +
-            `30€ (при оплате до 31.03.2024) <s>50€</s>\n` +
+            `<b>◆ ТАРИФ СТАНДАРТНЫЙ - 50€</b>\n` +
             `▫️доступ к закрытому Telegram-каналу со всеми видео-практиками и бонусами\n\n` +
-            `<b>◆ ТАРИФ VIP</b>\n` +
-            `80€ (при оплате до 31.03.2024) <s>120€</s>\n` +
+            `<b>◆ ТАРИФ VIP - 80€</b>\n` +
             `включает дополнительно двухчасовую индивидуальную консультацию с диагностикой и практикой:\n` +
             `▫️упражнения,\n` +
             `▫️глубокотканный массаж,\n` +
@@ -175,11 +154,12 @@ bot.action(['feedback', 'access', 'prices', 'getCourse'], async ctx => {
     }
 
 
-    //cron reminders start
+
+//cron reminders start
 
     const reminder30march = new CronJob(
         '03 18 30 3 *', // cronTime
-       async function () {
+        async function () {
             await ctx.replyWithHTML(
                 `Привет, это Катя!\n\n` +
                 `И мое бережное напоминание тебе, что до завтра можно записаться на курс по сниженной стоимости 💛🙏\n\n` +
@@ -189,8 +169,8 @@ bot.action(['feedback', 'access', 'prices', 'getCourse'], async ctx => {
                     disable_web_page_preview: true
                 },
             )
-           await ctx.replyWithHTML("Меню:",
-               mainMenu()
+            await ctx.replyWithHTML("Меню:",
+                mainMenu()
             )
         }, // onTick
         null, // onComplete
@@ -215,11 +195,10 @@ bot.action(['feedback', 'access', 'prices', 'getCourse'], async ctx => {
         true, // start
     );
 
-    //cron reminders end
+//cron reminders end
 
 
 })
-
 
 
 /**
@@ -246,10 +225,7 @@ function addActionBot(id_btn, src_img, text, preview) {
                         mainMenu()
                     )
 
-                }, 60000);
-
-
-
+                }, 30000);
 
 
             }
@@ -317,44 +293,6 @@ function getSubMenu1() {
 }
 
 
-// bot.action(['yes', 'no'], ctx => {
-//     if (ctx.callbackQuery.data === 'yes') {
-//         ctx.editMessageText('Ваша задача успешно добавлена')
-//     } else {
-//         ctx.deleteMessage()
-//     }
-// })
-
-
-//Cron Job
-
-bot.action(['feedback'], async (ctx) => {
-
-    ctx.reply('you are pressed gift');
-    console.log("15.17 text")
-
-
-    // const job = new CronJob(
-    //     '11 17 29 3 5', // cronTime
-    //     await function () {
-    //         ctx.reply('You will see this message 17 11');
-    //         //console.log("15.17 text")
-    //     }, // onTick
-    //     null, // onComplete
-    //     true, // start
-    //     //'America/Los_Angeles' // timeZone
-    // );
-
-
-})
-
-
-
-
-bot.help((ctx) => ctx.reply('Send me a sticker'))
-bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
-bot.hears('hi', (ctx) => ctx.reply('Hey guy'))
-bot.hears('Приветы', (ctx) => ctx.reply('Привет чувак!'))
 
 
 bot.launch()
